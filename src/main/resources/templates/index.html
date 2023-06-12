@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--suppress ThymeleafVariablesResolveInspection -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table style="width: 20%;">
+    <colgroup style="background: #eee; width: 25%;" span="2"></colgroup>
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>Description</td>
+        <td>Status</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task: ${tasks}">
+        <td th:text="${task.id}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.status}"></td>
+        <td>
+            <form th:action="@{/edit/{id}(id=${task.id})}" th:object="${tasks}" method="post">
+                <input type="hidden" name="id" th:value="${task.id}">
+                <input type="hidden" name="description" th:value="${task.description}">
+                <input type="hidden" name="status" th:value="${task.status}">
+                <button type="submit">Edit</button>
+            </form>
+        </td>
+        <!--        <td><a th:href="@{/edit/{id}(id=${task.id})}">Edit</a></td>-->
+        <td><a th:href="@{/delete/{id}(id=${task.id})}">Delete</a></td>
+
+
+    </tr>
+    </tbody>
+    <tr>
+        <form th:action="@{create}">
+        <td><label>
+            <input type="text" th:name="description" >
+        </label></td>
+        <td><label>
+            <select name="status">
+                        <option th:each="status : ${T(com.javarush.springproject1.domain.Status).values()}"
+                                th:value="${status}" th:text="${status}"></option>
+                    </select>
+        </label></td>
+           <td> <button type="submit">Create</button></td>
+    </form>
+    </tr>
+</table>
+<h2>
+    <button th:each="pageNumber : ${page_number}" class="button_page">
+        <a th:href="@{/(page=${pageNumber},limit=10)}" th:text="${pageNumber}"
+           th:classappend="${pageNumber == current_page? 'active_page' : ''}"></a>
+    </button>
+</h2>
+</body>
+</html>

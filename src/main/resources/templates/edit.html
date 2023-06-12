@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--suppress ThymeleafVariablesResolveInspection -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+<div>
+    <tr>
+        <form th:action="@{/editChange}" th:object="${task}">
+            <td><label>
+                <input type="text" th:name="id" th:value="${task.id}">
+            </label></td>
+            <td><label>
+                <input type="text" th:name="description">
+            </label></td>
+            <td><label>
+                <select name="status">
+                    <option th:each="status : ${T(com.javarush.springproject1.domain.Status).values()}"
+                            th:value="${status}" th:text="${status}"></option>
+                </select>
+            </label></td>
+            <td>
+                <button type="submit">Edit</button>
+            </td>
+        </form>
+    </tr>
+</div>
+</body>
+</html>
